@@ -45,6 +45,9 @@ let puppycat;
 // TIME
 var g_startTime = performance.now();
 var g_currentTime = performance.now();
+var g_fpsChangeTime = performance.now();
+var g_fpsChangeTimeElapsed = performance.now();
+var g_secondPassed = false;
 
 // mouse pos
 let mouseDown = false;
@@ -92,6 +95,9 @@ function main() {
 
   // ui events
   addUIEvents();
+
+  let msElapsed = performance.now() - g_currentTime;
+  fpsCounter.textContent = "FPS: " + (1000 / msElapsed).toFixed(0);
 
   // Specify the color for clearing <canvas>
   gl.clearColor(113/255, 138/255, 209/255, 1.0);
@@ -280,14 +286,20 @@ function tick() {
   // print so we know we are running
   //console.log(performance.now());
 
+  // 1 sec repeating timer for fps update
+  g_fpsChangeTimeElapsed = performance.now();
   // track performance
   let fpsCounter = document.getElementById('fpsCounter');
 
   // draw everything
   renderScene();
 
-  let msElapsed = performance.now() - g_currentTime;
-  fpsCounter.textContent = "FPS: " + (1000 / msElapsed).toFixed(0);
+  if (g_fpsChangeTimeElapsed - g_fpsChangeTime > 1000) {
+    g_fpsChangeTime = performance.now();
+    g_fpsChangeTimeElapsed = performance.now();
+    let msElapsed = performance.now() - g_currentTime;
+    fpsCounter.textContent = "FPS: " + (1000 / msElapsed).toFixed(0);
+  }
 
   // tell browser to update again when it has time
   requestAnimationFrame(tick);
