@@ -73,6 +73,21 @@ button {
 
 }
 
+/* firefox */
+input[type="range"]::-moz-range-progress {
+  background-color: var(--slider-fill-color); 
+}
+input[type="range"]::-moz-range-track {  
+  background-color: var(--slider-bg-color);
+}
+.slider::-moz-range-thumb {
+  width: 30px;
+  height: 30px; 
+  background: url('bell.png');
+  background-size: contain;
+  cursor: pointer; 
+}
+
 /* .slider {
   -webkit-appearance: none;  
   appearance: none;
